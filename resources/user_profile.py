@@ -67,7 +67,7 @@ class PublicUserProfile(Resource):
     def get(self, other_user_id):
         profile_doc = UserProfileService.get_user_profile(other_user_id)
         if profile_doc is None:
-            raise ApplicationError("User profile unavailable")
+            raise ApplicationError("User profile unavailable", 404)
         else:
             # return selected fields when another user requests this id
             response_dict = {
