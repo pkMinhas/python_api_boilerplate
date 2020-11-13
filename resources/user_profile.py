@@ -45,13 +45,13 @@ class UserProfile(Resource):
         """Creates the user's profile"""
         user_id = get_jwt_identity()
         data = UserProfileInputSchema().load(request.json)
-        UserProfileService.upsert_user_profile(user_id, full_name=data["fullName"],
-                                               city=data["city"],
-                                               country=data["country"],
-                                               gender=data["gender"],
-                                               age=data["age"],
-                                               occupation=data["occupation"],
-                                               mobile_number=data["mobileNumber"])
+        UserProfileService.upsert_user_profile(user_id, full_name=data.get("fullName"),
+                                               city=data.get("city"),
+                                               country=data.get("country"),
+                                               gender=data.get("gender"),
+                                               age=data.get("age"),
+                                               occupation=data.get("occupation"),
+                                               mobile_number=data.get("mobileNumber",0))
         return {}, 201
 
     @jwt_required
