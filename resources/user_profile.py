@@ -45,7 +45,6 @@ class UserProfile(Resource):
         """Creates the user's profile"""
         user_id = get_jwt_identity()
         data = UserProfileInputSchema().load(request.json)
-        # unpack the data because the key names are same for the function
         UserProfileService.upsert_user_profile(user_id, full_name=data["fullName"],
                                                city=data["city"],
                                                country=data["country"],
