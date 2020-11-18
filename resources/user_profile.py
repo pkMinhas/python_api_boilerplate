@@ -6,7 +6,7 @@ from schemas.user_profile import UserProfileInputSchema
 from datetime import datetime
 from services.aws_s3 import AwsS3
 from application_error import ApplicationError
-
+from date_utils import pymongo_naive_utc_datetime_to_ms
 
 class UserProfile(Resource):
     @jwt_required
@@ -37,7 +37,7 @@ class UserProfile(Resource):
                 response_dict["displayPicUrl"] = ""
             # Convert the datetime field into a timestamp
             last_modified_at = profile_doc.get(UserProfileConstants.LAST_MODIFIED_AT, datetime.utcnow())
-            response_dict["lastModifiedAt"] = datetime.timestamp(last_modified_at)
+            response_dict["lastModifiedAt"] = pymongo_naive_utc_datetime_to_ms(last_modified_at)
 
             return response_dict
 
